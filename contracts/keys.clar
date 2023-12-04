@@ -113,6 +113,27 @@
   (ok (default-to u0 (map-get? goldenEggSupply { goose: goose })))
 )
 
+(define-read-only (get-goose (goose principal))
+    ;; Implement buy price logic
+    (let
+        (
+            (supply (default-to u0 (map-get? goldenEggSupply { goose: goose })))
+            (price (get-price supply u1))
+            (goose-fee (* (/ price u100) (var-get gooseFeePercentof100)))
+            (protocol-fee (* (/ price u100) (var-get protocolFeePercentof100)))
+        )
+        (ok {
+          address: goose,
+          inscription-number: u1,
+          supply: supply,
+          price: price,
+          goose-fee: goose-fee,
+          protocol-fee: protocol-fee,
+          holder-count: u1
+        })
+    )
+)
+
 (define-read-only (get-fresh-egg-price (goose principal) (egg-count uint))
     ;; Implement buy price logic
     (let
@@ -123,6 +144,8 @@
             (protocol-fee (* (/ price u100) (var-get protocolFeePercentof100)))
         )
         (ok {
+          address: goose,
+          egg-count: egg-count,
           price: price,
           goose-fee: goose-fee,
           protocol-fee: protocol-fee

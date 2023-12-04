@@ -135,3 +135,19 @@ describe('test `get-egg-supply` ', () => {
     expect(buyInitialKeys.result["value"]).toStrictEqual(Cl.uint(120));
   });
 });
+
+describe('test `get-goose` ', () => {
+  it('fetches the properties for goose 1', () => {
+    const buyInitialKeys = simnet.callReadOnlyFn('keys', 'get-goose', [Cl.standardPrincipal(goose1)], goose1);
+    console.log(Cl.prettyPrint(buyInitialKeys.result)); // (ok 120)
+    //expect(buyInitialKeys.result["value"]).toStrictEqual(Cl.uint(120));
+  });
+});
+
+describe('test `get-goose` ', () => {
+  it('fetches the properties for goose 2', () => {
+    const buyInitialKeys = simnet.callReadOnlyFn('keys', 'get-goose', [Cl.standardPrincipal(goose2)], goose1);
+    console.log(Cl.prettyPrint(buyInitialKeys.result)); // (ok 120)
+    //expect(buyInitialKeys.result["value"]).toStrictEqual(Cl.uint(120));
+  });
+});
