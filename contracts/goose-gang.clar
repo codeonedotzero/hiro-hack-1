@@ -1,4 +1,3 @@
-
 ;; title: keys
 ;; version:
 ;; summary:
@@ -22,12 +21,27 @@
 
 ;; data maps
 ;;
-(define-map geese principal { name: (string-ascii 144), inscription-number: uint })
+(define-map geese principal { name: (string-ascii 144), inscription-id: (string-ascii 66) })
 (define-map goldenEggHoldings { goose: principal, holder: principal } uint)
 (define-map goldenEggSupply { goose: principal } uint)
 
 ;; public functions
 ;;
+(define-public (create-goose-gang 
+    (goose principal) 
+    (name (string-ascii 144)) 
+    (inscription-id (string-ascii 66)) 
+    (initial-egg-supply uint))
+    (begin 
+        (map-set geese goose { 
+            name: name,
+            inscription-id: inscription-id
+        })
+        (unwrap-panic (lay-eggs goose initial-egg-supply))
+        (ok true)
+    )
+)
+
 (define-public (lay-eggs (goose principal) (egg-count uint))
   (let
     (
@@ -36,6 +50,7 @@
     )
     (if (or (> supply u0) (is-eq tx-sender goose))
       (begin
+        (asserts! (is-some (map-get? geese goose)) (err u4))
         (match (stx-transfer? price tx-sender (as-contract tx-sender))
           success
           (begin
@@ -180,4 +195,3 @@
     )
   )
 )
-
