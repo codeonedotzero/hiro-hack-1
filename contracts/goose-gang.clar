@@ -15,13 +15,14 @@
 
 ;; data vars
 ;;
+(define-data-var gooseCount uint u0)
 (define-data-var gooseFeePercentof100 uint u3)
 (define-data-var protocolFeePercentof100 uint u2)
 (define-data-var protocolFeeDestination principal 'ST2JHG361ZXG51QTKY2NQCVBPPRRE2KZB1HR05NNC)
 
 ;; data maps
 ;;
-(define-map geese principal { name: (string-ascii 144), inscription-id: (string-ascii 66) })
+(define-map geese principal { name: (string-ascii 144), gang-name: (string-ascii 144), inscription-id: (string-ascii 66) })
 (define-map goldenEggHoldings { goose: principal, holder: principal } uint)
 (define-map goldenEggSupply { goose: principal } uint)
 
@@ -30,13 +31,16 @@
 (define-public (create-goose-gang 
     (goose principal) 
     (name (string-ascii 144)) 
+    (gang-name (string-ascii 144)) 
     (inscription-id (string-ascii 66)) 
     (initial-egg-supply uint))
     (begin 
         (map-set geese goose { 
             name: name,
+            gang-name: gang-name,
             inscription-id: inscription-id
         })
+        (var-set gooseCount (+ (var-get gooseCount) u1))
         (unwrap-panic (lay-eggs goose initial-egg-supply))
         (ok true)
     )
@@ -139,7 +143,9 @@
         )
         (ok {
           address: goose,
-          inscription-number: u1,
+          name: (default-to "" (get name (map-get? geese goose))),
+          gang-name: (default-to "" (get gang-name (map-get? geese goose))),
+          inscription-id: (default-to "" (get inscription-id (map-get? geese goose))),
           supply: supply,
           price: price,
           goose-fee: goose-fee,

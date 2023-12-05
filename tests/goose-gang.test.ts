@@ -22,6 +22,7 @@ describe('test `create-goose-gang` ', () => {
     const buyInitialKeys = simnet.callPublicFn('goose-gang', 'create-goose-gang', [
       Cl.standardPrincipal(goose1), 
       Cl.stringAscii("Goose 1"),
+      Cl.stringAscii("Geese of NY"),
       Cl.stringAscii("66ca7cc6f089e1bcd2135b55476376f4f62f012bb26997e11626ab2e4562ea81i0"),
       Cl.uint(100)
     ], goose1);
@@ -72,6 +73,7 @@ describe('test `create-goose-gang` ', () => {
     const buyInitialKeys = simnet.callPublicFn('goose-gang', 'create-goose-gang', [
       Cl.standardPrincipal(goose2), 
       Cl.stringAscii("Goose 2"),
+      Cl.stringAscii("West Coast Honkers"),
       Cl.stringAscii("1a725f4dbb9bbc844d915b074ba43412b308d388915e18c9b2e5755e2a7fecd2i0"),
       Cl.uint(100)
     ], goose2);
