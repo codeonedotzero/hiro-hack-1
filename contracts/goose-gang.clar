@@ -22,7 +22,7 @@
 
 ;; data maps
 ;;
-(define-map geese principal { name: (string-ascii 144), gang-name: (string-ascii 144), inscription-id: (string-ascii 66) })
+(define-map geese principal { goose-name: (string-ascii 144), gang-name: (string-ascii 144), inscription-id: (string-ascii 66) })
 (define-map goldenEggHoldings { goose: principal, holder: principal } uint)
 (define-map goldenEggSupply { goose: principal } uint)
 
@@ -30,13 +30,13 @@
 ;;
 (define-public (create-goose-gang 
     (goose principal) 
-    (name (string-ascii 144)) 
+    (goose-name (string-ascii 144)) 
     (gang-name (string-ascii 144)) 
     (inscription-id (string-ascii 66)) 
     (initial-egg-supply uint))
     (begin 
         (map-set geese goose { 
-            name: name,
+            goose-name: goose-name,
             gang-name: gang-name,
             inscription-id: inscription-id
         })
@@ -143,7 +143,7 @@
         )
         (ok {
           address: goose,
-          name: (default-to "" (get name (map-get? geese goose))),
+          goose-name: (default-to "" (get goose-name (map-get? geese goose))),
           gang-name: (default-to "" (get gang-name (map-get? geese goose))),
           inscription-id: (default-to "" (get inscription-id (map-get? geese goose))),
           supply: supply,
