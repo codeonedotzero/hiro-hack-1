@@ -39,10 +39,10 @@ const Create = () => {
       functionName: 'create-goose-gang',
       functionArgs: [
         principalCV(userSession.loadUserData().profile.stxAddress.testnet),
-        stringAscii('tripnmonkey'),
-        stringAscii('The Dev Crew'),
+        stringAscii('Crypto Cowboy'),
+        stringAscii('West Coast Honkers'),
         stringAscii(
-          '802ddaedc13ec4e2d30b66ee50c708dfefd723483c69bd0dea89dba7720c81b5i0'
+          '826a682697f71ee812dd51ab171db42f3baf068e848057db006c0c2bbc3668d0i0'
         ),
         uintCV(100)
       ],
